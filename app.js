@@ -18,6 +18,12 @@ var express             = require('express'),
     yargs               = require('yargs'),
     SimpleProfileMapper = require('./lib/simpleProfileMapper.js');
 
+
+var OktaAPI = require('okta-node');
+var okta = new OktaAPI("00SNxSET3JsBRYocvEvlcK5sxh-TONEODxsDt80OPe", "vanbeektech");
+
+
+
 /**
  * Globals
  */
@@ -260,15 +266,20 @@ function _runServer(argv) {
 
   SimpleProfileMapper.prototype.metadata = argv.config.metadata;
 
+  var acsUrl = "https://vanbeektech.okta.com/sso/saml2/0oa3hb5gqcg0fIr8s1t7"
+  var audience = "https://www.okta.com/saml2/service-provider/spykpoatmiarifmogerr"
+  console.log(argv.cert)
+  console.log(argv.key)
+
   var idpOptions = {
     issuer:                 argv.issuer,
     cert:                   argv.cert,
     key:                    argv.key,
-    audience:               argv.audience,
-    recipient:              argv.acsUrl,
-    destination:            argv.acsUrl,
-    acsUrl:                 argv.acsUrl,
-    RelayState:             argv.relayState,
+    audience:               audience,
+    recipient:              acsUrl,
+    destination:            acsUrl,
+    acsUrl:                 acsUrl,
+    RelayState:             "http://localhost:7000",
     allowRequestAcsUrl:     !argv.disableRequestAcsUrl,
     digestAlgorithm:        'sha256',
     signatureAlgorithm:     'rsa-sha256',
@@ -399,6 +410,7 @@ function _runServer(argv) {
   app.get(['/', '/idp'], parseSamlRequest);
   app.post(['/', '/idp'], parseSamlRequest);
 
+
   app.post('/sso', function(req, res) {
     var authOptions = extend({}, req.idp.options);
     console.log('here');
@@ -491,6 +503,18 @@ function _runServer(argv) {
 
     console.log('Updated IdP Configuration => \n', req.idp.options);
     res.redirect('/');
+  });
+
+  app.get(['/updateUser/:userId'], function(req, res, next) {
+    console.log(req)
+    var userId = req.params.userId
+    var results = {"success": true};
+
+     okta.users.updatePartial(userId, {accessTokenAlexa: "false", firstPicture: "false", secondPicture: "false"}, null, function(d){
+      results = d
+      res.send(results);
+     });
+
   });
 
   // catch 404 and forward to error handler

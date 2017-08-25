@@ -4,40 +4,227 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Simple Identity Provider</title>
+    <title>Sign in with Alexa</title>
     <link href="/bower_components/fontawesome/css/font-awesome.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
     <script src="/bundle.js"></script>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/1.11.0/js/okta-sign-in.min.js" type="text/javascript"></script>
+      <script src="https://ok1static.oktacdn.com/assets/js/sdk/okta-auth-js/1.5.0/OktaAuth.min.js" type="text/javascript"></script>
+  <link href="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/1.11.0/css/okta-sign-in.min.css" type="text/css" rel="stylesheet">
+  <!-- Customizable css theme options. Link your own customized copy of this file or override styles in-line -->
+  <link href="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/1.11.0/css/okta-theme.css" type="text/css" rel="stylesheet">
+  <script
+  src="https://ok1static.oktacdn.com/assets/js/sdk/okta-auth-js/1.6.0/okta-auth-js.min.js"
+  type="text/javascript"></script>
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+h1 { 
+    display: inline;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+#background {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    background: url(polina.jpg) no-repeat;
+    background-size: cover;
+}
+
+
+
+
+
+
+#prompt {
+ 
+    font-size: 16px;
+   
+}
+
+.user-row {
+    margin-bottom: 14px;
+}
+
+.user-row:last-child {
+    margin-bottom: 0;
+}
+
+.dropdown-user {
+    margin: 13px 0;
+    padding: 5px;
+    height: 100%;
+}
+
+.dropdown-user:hover {
+    cursor: pointer;
+}
+
+.table-user-information > tbody > tr {
+    border-top: 1px solid rgb(221, 221, 221);
+}
+
+.table-user-information > tbody > tr:first-child {
+    border-top: 0;
+}
+
+#userNameHeading {
+  margin-right: 15px;
+
+}
+
+.table-user-information > tbody > tr > td {
+    border-top: 0;
+}
+.toppad
+{margin-top:20px;
+}
+
+#loggedIn {
+  width: 100%;
+  right: 0;
+   left: 0;
+}
+</style>
+</head>
   </head>
   <body>
+    <video autoplay loop muted poster="screenshot.jpg" id="background">
+
+    <source src="/city.mp4" type="video/mp4">
+}
+}
+3 
+</video>
+
     <!-- Static navbar -->
     <nav class="navbar navbar-default">
+    <a href="#" class="navbar-left"><img height="60" width="140" src="/Experian_logo.png"></a>
       <div class="container-fluid">
-        <div class="navbar-header">
-        <a class="navbar-brand" href="/metadata"><i class="fa fa-key"><span>Simple SAML Identity Provider</span></i></a>
+        <div class="navbar-header">  
 
           {{#if idp}}
-          <p class="navbar-text">{{idp.issuer}}</p>
+        <!--   <p class="navbar-text">{{idp.issuer}}</p> -->
           {{/if}}
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-          <li class="active"><a href="/settings"><i class="fa fa-cog"><span>Settings</span></i></a></li>
+          <li id="loggedInUser"><i class="fa fa-user fa-2x"><span><h1 id="userNameHeading"></h1></span></i></li>
+          <li><button id="logout"><h1>Log Out</h1></button></li>
           </ul>
         </div><!--/.nav-collapse -->
     </nav>
 
+      
 
     <div class="container">
+        <div id="loginDiv">
+          <center><button class="btn btn-info btn-lg" id="showLogin">LOGIN</button></center>
+        </div>
       <div class="row">
         {{{body}}}
       </div>
     </div>
+
+    <div style="display: none;" id="loggedIn" class="container">
+      <div class="row">
+      <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+
+      </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+   
+   
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 id="userTableInfo" class="panel-title">Employee XYZ</h3> <div id="approval">
+      <center><img src="/accessgranted.gif"></center>
+        </div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+        
+                
+                <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
+                  <dl>
+                    <dt>DEPARTMENT:</dt>
+                    <dd>Administrator</dd>
+                    <dt>HIRE DATE</dt>
+                    <dd>11/12/2013</dd>
+                    <dt>DATE OF BIRTH</dt>
+                       <dd>11/12/2013</dd>
+                    <dt>GENDER</dt>
+                    <dd>Male</dd>
+                  </dl>
+                </div>-->
+                <div class=" col-md-9 col-lg-9 "> 
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>Department:</td>
+                        <td>Programming</td>
+                      </tr>
+                      <tr>
+                        <td>Hire date:</td>
+                        <td>06/23/2013</td>
+                      </tr>
+                      <tr>
+                        <td>Date of Birth</td>
+                        <td>01/24/1988</td>
+                      </tr>
+                   
+                         <tr>
+                             <tr>
+                        <td>Rating</td>
+                        <td>5 stars</td>
+                      </tr>
+                        <tr>
+                        <td>Home Address</td>
+                        <td>Kathmandu,Nepal</td>
+                      </tr>
+                      <tr>
+                        <td>Email</td>
+                        <td><a href="mailto:info@support.com">info@support.com</a></td>
+                      </tr>
+                        <td>Phone Number</td>
+                        <td>123-4567-890(Landline)<br><br>555-4567-890(Mobile)
+                        </td>
+                           
+                      </tr>
+                     
+                    </tbody>
+                  </table>
+                  
+              
+                </div>
+              </div>
+            </div>
+                 <div class="panel-footer">
+                        <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                        <span class="pull-right">
+                            <a href="" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                        </span>
+                    </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </body>
 
@@ -51,55 +238,199 @@
 
   <script>
 
-        $("body > div > div > div.col-md-8.col-md-offset-2 > div > div.panel-body > form").submit
- 
+
+
+
+
+
+
+
+function goTime() {
+
 setInterval(function(){ 
     //code goes here that will be run every 5 seconds.    
 
+console.log("go")
+  var userNameField = document.getElementById('userNameInput').value
+  if(userNameField != 0){
+    $.ajax({
+       url: 'https://vanbeektech.okta.com/api/v1/users/' + userNameField,
+       type: 'GET',
+       xhrFields: { withCredentials: true },
+       dataType: 'json',
+       headers: {
+       "Authorization": "SSWS 00gvA4Y25xrXIaCqURU3YDbIU4ycHV5rYS36HcPQ6v",
+         "Content-Type": "application/json",
+         "Accept": "application/json"},
+       data: {}
+     })
+     .done(function(d) {
 
+          var item = d
+          console.log(item.profile.accessTokenAlexa)
+             console.log(item.profile)
+          console.log("complete");
+          if(item.profile.firstPicture == "lion"){
+            $("#picture").attr("src", "/batman.jpg")
+            $("#prompt").text("What superhero is in the picture?  Reply with the blank.")
+            if(item.profile.secondPicture == "batman"){
+              $("#picture").attr("src", "/cityofbirth.jpg")
+              $("#prompt").text("What is the city of your birth?")
+               if(item.profile.accessTokenAlexa == "signin"){
+                  console.log("ya")
+                  document.getElementById("formAvb").submit()
+                }
+              }
+          }
+      
+     })
+     .fail(function(d) {
 
-$.ajax({
-   url: 'https://vanbeektech.okta.com/api/v1/users/ned.stark@vanbeektech.com',
-   type: 'GET',
-   xhrFields: { withCredentials: true },
-   dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
-   headers: {
-   "Authorization": "SSWS 00gvA4Y25xrXIaCqURU3YDbIU4ycHV5rYS36HcPQ6v",
-     "Content-Type": "application/json",
-     "Accept": "application/json"},
-   data: {}
- })
- .done(function(d) {
-  
- })
- .fail(function(d) {
-
- })
- .always(function(d) {
-      var profile = {profile: {accessTokenAlexa: "backToNormal"}}
-      var item = JSON.parse(d.responseText)
-      console.log(item.profile.accessTokenAlexa)
-   console.log("complete");
-   if(item.profile.accessTokenAlexa == "signin"){
-        $.ajax({
-         url: 'https://vanbeektech.okta.com/api/v1/users/00u2pf2nf1lcnOuTP1t7',
-         type: 'POST',
-         xhrFields: { withCredentials: true },
-         dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
-         headers: {
-         "Authorization": "SSWS 00gvA4Y25xrXIaCqURU3YDbIU4ycHV5rYS36HcPQ6v",
-           "Content-Type": "application/json",
-           "Accept": "application/json"},
-         data: {profile}
-     }).always(function(d){
-        console.log(d)
-     });
-      console.log("ya")
-      document.getElementById("formAvb").submit()
-   }
- });
-
+     })
+     .always(function(d) {
+     
+         });
+  }
 }, 1000);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  $("#loginStuff").hide()
+  $("#logout").hide()
+  $("#logout").on("click", function(e){
+
+    window.location = "https://vanbeektech.okta.com/login/signout?fromURI=http://localhost:7000"
+
+  })
+
+  $("#showLogin").on("click", function(e){
+      $("#loginDiv").hide()
+      $("#loginStuff").show()
+
+
+      
+
+
+
+  })
+
+
+  $("#loginAndReset").on("click", function(e){
+        var userNameField = document.getElementById('userNameInput').value
+         $.ajax({
+       url: 'https://vanbeektech.okta.com/api/v1/users/' + userNameField,
+       type: 'GET',
+       xhrFields: { withCredentials: true },
+       crossDomain: true,
+       dataType: 'json',
+       headers: {
+       "Authorization": "SSWS 00gvA4Y25xrXIaCqURU3YDbIU4ycHV5rYS36HcPQ6v",
+         "Content-Type": "application/json",
+         "Accept": "application/json"},
+       data: {}
+     })
+     .done(function(d) {
+      console.log("done")
+      console.log(d)
+        var user = d
+        var sub = user.id
+        console.log("sub: %s", sub)
+        var profile = { "profile": {"accessTokenAlexa": "false"}}
+       $.ajax({
+       url: '/updateUser/' + sub,
+       type: 'GET',
+       dataType: 'json',
+       data: {}
+       }).done(function(d){
+          console.log("post done")
+          console.log(d)
+          goTime()
+
+       }).fail(function(d){
+        console.log("post fail")
+        console.log(d)
+
+
+       })
+      
+     })
+     .fail(function(d) {
+      console.log("fail")
+      console.log(d)
+
+     })
+     .always(function(d) {
+
+
+
+        
+    });
+
+  })
+
+  $("#loggedIn").hide()
+  $("#loggedInUser").hide()
+  var signIn = new OktaSignIn({
+  baseUrl: 'https://vanbeektech.okta.com',
+  clientId: '0oa3ec5xwr8mvXda31t7',
+  redirectUri: 'http://localhost:3000',
+  authParams: {
+// display: 'page',
+  responseType: 'token',
+  responseMode: 'okta_post_message',
+  scopes: ['openid']
+  }
+});
+
+   this.signIn.session.get((response) => {
+      if (response.status !== 'INACTIVE') {
+        console.log(response)
+        $("#loggedInUser").show()
+        $("#loggedIn").show()
+        $("#loginStuff").hide()
+        $("#logout").show()
+        $("#userNameHeading").append(response.login)
+        $("#userTableInfo").text(response.login)
+        $("#showLogin").hide()
+
+      console.log("HEY TEST")
+      } else {
+        console.log("YAKA")
+
+
+
+      }
+    });
+
+        $("body > div > div > div.col-md-8.col-md-offset-2 > div > div.panel-body > form").submit
+
+
+
+
  
  $("#submit").css('color', 'red');
 

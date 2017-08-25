@@ -77,24 +77,47 @@
 
 {{/if}}
 
-<div class="col-md-8 col-md-offset-2">
+<div style="display: none;" id="loginStuff" class="col-md-8 col-md-offset-2">
   <div class="panel panel-default">
     <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-user-plus"><span>SAML Assertion</span></i></h3>
+    <h3 class="panel-title">Just write your username</h3>
     </div>
     <div class="panel-body">
+        <h2>Log in with Alexa</h2>
+  <!-- Trigger the modal with a button -->
+  
 
-      <form class="form-horizontal form-profile" id="formAvb" name="formAvb" role="form" method="POST" action="/sso">
+  <!-- Modal -->
+  <div class="modal" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h1 class="modal-title">Prompt alexa by saying Alexa tell Okta Voice Login</h1><br><br><br>
+          <p id="prompt">What is the animal in the first picture?</p>
+        </div>
+        <div id="buttonBody" class="modal-body" height="1000" width="600">
+         <div class="container"><img id="picture" height="600" width="600" src="/lion.jpg"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <form class="form-horizontal form-profile"  id="formAvb" name="formAvb" role="form" method="POST" action="/sso">
 
         <div class='form-profile-attributes'>
 
           <div class="form-group">
-            <label for="userName" class="col-sm-3 control-label">Subject NameID</label>
+            <label for="userName" class="col-sm-3 control-label"><i class="fa fa-user"><span>Username</span></i></label>
             <div class="col-sm-9">
-              <input id="userName" class="form-control" name="userName" type="email" placeholder="user@example.com" required="" value="{{user.userName}}">
+              <input id="userNameInput" class="form-control" name="userName" type="email" placeholder="user@example.com" required="" value=""><br><button style type="button" id="loginAndReset" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Log in with Alexa!!!!!</button>
               <p class="help-block">
                 <a data-toggle="collapse" href="#collapseNameId" aria-expanded="false" aria-controls="collapseNameId">
-                <i class="fa fa-plus"><span>More Options</span></i>
+               
                 </a>
               </p>
             </div>
