@@ -279,7 +279,7 @@ function _runServer(argv) {
     recipient:              acsUrl,
     destination:            acsUrl,
     acsUrl:                 acsUrl,
-    RelayState:             "http://localhost:7000",
+    RelayState:             "https://still-plains-75542.herokuapp.com",
     allowRequestAcsUrl:     !argv.disableRequestAcsUrl,
     digestAlgorithm:        'sha256',
     signatureAlgorithm:     'rsa-sha256',
