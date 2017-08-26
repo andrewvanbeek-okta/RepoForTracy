@@ -139,12 +139,12 @@ function processArgs(options) {
       },
       acsUrl: {
         description: 'SP Assertion Consumer URL',
-        required: false,
+        required: true,
         alias: 'acs'
       },
       audience: {
         description: 'SP Audience URI',
-        required: false,
+        required: true,
         alias: 'aud'
       },
       relayState: {
@@ -279,7 +279,7 @@ function _runServer(argv) {
     recipient:              acsUrl,
     destination:            acsUrl,
     acsUrl:                 acsUrl,
-    RelayState:             "https://still-plains-75542.herokuapp.com",
+    RelayState:             "http://localhost:7000",
     allowRequestAcsUrl:     !argv.disableRequestAcsUrl,
     digestAlgorithm:        'sha256',
     signatureAlgorithm:     'rsa-sha256',
