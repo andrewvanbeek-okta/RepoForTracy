@@ -139,12 +139,12 @@ function processArgs(options) {
       },
       acsUrl: {
         description: 'SP Assertion Consumer URL',
-        required: true,
+        required: false,
         alias: 'acs'
       },
       audience: {
         description: 'SP Audience URI',
-        required: true,
+        required: false,
         alias: 'aud'
       },
       relayState: {
