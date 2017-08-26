@@ -140,12 +140,14 @@ function processArgs(options) {
       acsUrl: {
         description: 'SP Assertion Consumer URL',
         required: true,
-        alias: 'acs'
+        alias: 'acs',
+        default: 'https://vanbeektech.okta.com/sso/saml2/0oa3hb5gqcg0fIr8s1t7'
       },
       audience: {
         description: 'SP Audience URI',
         required: true,
-        alias: 'aud'
+        alias: 'aud',
+        default: 'https://www.okta.com/saml2/service-provider/spykpoatmiarifmogerr'
       },
       relayState: {
         description: 'Default SAML RelayState for SAMLResponse',
@@ -279,7 +281,7 @@ function _runServer(argv) {
     recipient:              acsUrl,
     destination:            acsUrl,
     acsUrl:                 acsUrl,
-    RelayState:             "http://localhost:7000",
+    RelayState:             "https://still-plains-75542.herokuapp.com",
     allowRequestAcsUrl:     !argv.disableRequestAcsUrl,
     digestAlgorithm:        'sha256',
     signatureAlgorithm:     'rsa-sha256',
