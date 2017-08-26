@@ -436,9 +436,27 @@ console.log("go")
  
  $("#submit").css('color', 'red');
 
-
+  $(document).ready(function() {
+    jQuery.validator.setDefaults({
+      errorPlacement: function(error, element) {
+        if(element.parent().hasClass('input-prepend') || element.parent().hasClass('input-append')) {
+          error.insertAfter(element.parent());
+        } else {
+          error.insertAfter(element);
+        }
+      },
+      errorElement: "span",
+      errorClass: "help-block",
+      highlight: function(element) {
+        $(element).closest('.form-group').addClass('has-error');
+      },
+      success: function(element) {
+        $(element).closest('.form-group').removeClass('has-error');
+      }
+    });
+  });
   </script>
 
-
+{{{block "scripts"}}}
 
 </html>
