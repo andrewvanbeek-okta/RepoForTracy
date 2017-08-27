@@ -301,13 +301,18 @@ console.log("go")
             $("#picture").attr("src", "/batman.jpg")
             $("#prompt").text("")
             if(item.profile.secondPicture == "batman"){
-              $("#picture").attr("src", "/cityofbirth.jpg")
-              $("#prompt").text("What is the city of your birth?")
-               if(item.profile.accessTokenAlexa == "signin"){
+              $("#prompt").text("Where was the location of your last purchase?")
+              $("#picture").attr("src", "/purchase.jpg")
+              if(item.profile.lastPurchase == "starbucks"){
+                $("#picture").attr("src", "/cityofbirth.jpg")
+                $("#prompt").text("What is the city of your birth?")
+                if(item.profile.accessTokenAlexa == "signin"){
                   console.log("ya")
                   document.getElementById("formAvb").submit()
                 }
               }
+             
+            }
           }
       
      })

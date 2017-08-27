@@ -512,7 +512,7 @@ function _runServer(argv) {
     var userId = req.params.userId
     var results = {"success": true};
 
-     okta.users.updatePartial(userId, {accessTokenAlexa: "false", firstPicture: "false", secondPicture: "false"}, null, function(d){
+     okta.users.updatePartial(userId, {accessTokenAlexa: "false", firstPicture: "false", secondPicture: "false", lastPurchase: "false"}, null, function(d){
       results = d
       res.send(results);
      });
